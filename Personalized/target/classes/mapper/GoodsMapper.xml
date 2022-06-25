@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iflytek.web.mapper.GoodsMapper">
+    <select id="getByIds" resultType="Goods">
+        select g.id,g.goods_name,g.goods_introduce,g.goods_price,g.category_id,g.url,g.slide_picture,g.detail_picture,g.grade,g.rank_num from goods g
+        where g.id in (${goodsIds})
+    </select>
+
+    <select id="queryHotGoods" resultType="Goods">
+        select g.id,g.goods_name,g.goods_introduce,g.goods_price,g.category_id,g.url,g.slide_picture,g.detail_picture,g.grade,g.rank_num from goods g
+        right join hotgoods hg on g.id = hg.goodsid
+        where g.id = hg.goodsid
+    </select>
+</mapper>
