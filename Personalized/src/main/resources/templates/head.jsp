@@ -46,6 +46,8 @@
                             <div class="col-sm-offset-4 col-sm-5">
                                 <button id="btn-login" type="button" class="btn btn-default btn-block btn-primary">登陆</button>
                                 <a id="jump">跳转至注册页面</a>
+                                <br/>
+                                <a id="jumpface"  class="btn btn-default btn-block btn-primary">跳转至人脸注册和登录页面</a>
                             </div>
                         </div>
                     </form>
@@ -56,6 +58,7 @@
             <!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
 
     <!-- 注册界面 -->
     <div class="modal fade" id="myReg">
@@ -89,7 +92,6 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-5">
                                 <button id="btn-reg" type="button" class="btn btn-default btn-block btn-primary">注册</button>
-
                             </div>
                         </div>
                     </form>
@@ -100,6 +102,68 @@
             <!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+
+
+    <!-- 人脸注册界面 -->
+    <div class="modal fade" id="myRegface">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="modal-title" align="center">人脸注册和登录</h4>
+                    <br/>
+
+                    <form class="form-horizontal" role="form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-offset-2 col-sm-2 control-label">输入账号</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="regnameface" id="regnameface" placeholder="请输您的入账号">
+                            </div>
+                        </div>
+                        <div>
+                            <%--                            <input id="upload" type="file" accept="image/*;" capture="camera" >--%>
+
+                            <div class="camera">
+                                <video id="video">Video stream not available.</video>
+                                <br/>
+                                <button id="startbutton">Take photo</button>
+                            </div>
+                            <canvas id="canvas" hidden ></canvas>
+                            <br/>
+                            <div class="output">
+                                <%--                                <img style="display: none;" id="photo"--%>
+                                <img id="photo" name="photo"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-5">
+                                <button id="btn-regface" class="btn btn-default btn-block btn-primary">
+                                    人脸注册
+                                </button>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="col-sm-offset-4 col-sm-5">
+                                <button id="btn-loginFace" class="btn btn-default btn-block btn-primary">
+                                    人脸登录
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
     <!--用户偏号选择-->
     <div class="modal fade" tabindex="-1" role="dialog" id="myPrefer" aria-labelledby="gridSystemModalLabel">
         <div class="modal-dialog" role="document">

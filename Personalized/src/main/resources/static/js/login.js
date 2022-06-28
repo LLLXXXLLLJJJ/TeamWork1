@@ -178,14 +178,15 @@ var REGISTER={
     },
     beforeSubmit:function() {
         //检查用户是否已经被占用
+        alert('checkusername');
         $.ajax({
             type:"POST",
             url : "/user/check/"+escape($("#regName").val()),
             success : function(result) {
-                if (result==true) {
+                if (result.code==0) {
                     //注册
                     var regData={
-                        userName:$("#regName").val(),
+                        username:$("#regName").val(),
                         password:$("#regPwd").val(),
                     }
                     $.ajax({
@@ -195,7 +196,7 @@ var REGISTER={
                         dataType:"json",
                         contentType:"application/json",
                         success : function(result) {
-                            if (result == true) {
+                            if (result.code == 0) {
                                 showTip("用户注册成功，请登录！");
                                 $('#myLogin').modal('show') //显示模态框
                                 $('#myReg').modal('hide') //隐层模态框
@@ -205,10 +206,10 @@ var REGISTER={
                             }
                         }
                     });
-                } else {
-                    showTip("此用户名已经被占用，请选择其他用户名");
+                 } else {
+                     showTip("此用户名已经被占用，请选择其他用户名");
                     $("#regName").select();
-                }
+                 }
             }
         });
 

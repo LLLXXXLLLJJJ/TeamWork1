@@ -2,22 +2,60 @@ package com.iflytek.web.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-@Data
-@TableName(value = "login")
+/**
+ *
+ */
+@TableName("login")
 public class User implements UserDetails {
-    private Integer id;
+    private Integer Id;
+
     private String username;
     private String password;
-    private String lastsearch;  // last_search
+    @TableField(value="lastsearch")
+    private String lastSearch;
+
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+
+    public String getUserName() {
+        return username;
+    }
+
+    public void setUserName(String userName) {
+        this.username = userName;
+    }
 
     @TableField(exist = false)
     private Collection<? extends GrantedAuthority> authorities;
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -38,4 +76,19 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getLastSearch() {
+        return lastSearch;
+    }
+
+    public void setLastSearch(String lastSearch) {
+        this.lastSearch = lastSearch;
+    }
+
+
+
 }

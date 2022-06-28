@@ -20,18 +20,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iflytek.web.pojo.Recommendation;
 import com.iflytek.web.pojo.User;
-import com.iflytek.web.service.RecommendationService;
 import com.iflytek.web.util.PythonUtil;
+import com.iflytek.web.service.RecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -57,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.authorizeRequests((authorize) -> authorize
-						.antMatchers("/css/**", "/home","/home/**","/","/js/**","/images/**","/fonts/**").permitAll()
+						.antMatchers("/user/check/**","/user/register","/css/**", "/home","/home/**","/","/js/**","/images/**","/fonts/**").permitAll()
 						.anyRequest().authenticated()
 				)
 				.formLogin((formLogin) -> formLogin
@@ -79,8 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 										String xRequestedWith=httpServletRequest.getHeader("X-Requested-With");
 										if(xRequestedWith!= null && xRequestedWith.indexOf("XMLHttpRequest")!=-1){
 											// 是ajax的处理方式
-											httpServletRequest.getSession().setAttribute("userId", obj.getId());
-											httpServletRequest.getSession().setAttribute("userName", obj.getUsername());
+											httpServletRequest.getSession().setAttribute("Id", obj.getId());
+											httpServletRequest.getSession().setAttribute("userName", obj.getUserName());
 
 											// 向页面上输入true或者false
 											httpServletResponse.setContentType("application/json;charset=utf-8");
@@ -92,14 +90,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 										}else{
 
 											httpServletRequest.getSession().setAttribute("user", obj);
-											httpServletRequest.getSession().setAttribute("userName", obj.getUsername());
+											httpServletRequest.getSession().setAttribute("userName", obj.getUserName());
 											httpServletResponse.sendRedirect("/home/");
 										}
 
 										try {
 											// 查询数据库 个性化推荐表，如果存在， 判断时间是否为今天，如果为今天不执行下面的操作，否则执行更新个性化推荐的商品
 											QueryWrapper<Recommendation> queryWrapper = new QueryWrapper<>();
-											queryWrapper.eq("userid", obj.getId());
+											queryWrapper.eq("Id", obj.getId());
 											Recommendation recommendation = recommendationService.getOne(queryWrapper);
 											// 个性化推荐没有做，那么就推荐； 或者 昨天之前推荐的，而今天没有推荐，那么也进行推荐
 											if (recommendation == null || recommendation.getCreatetime().before(new Date(System.currentTimeMillis() - 24*60*60*1000L))){

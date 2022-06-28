@@ -33,15 +33,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {  // 认证的过程
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username); // username页面来的   select * from login where username= ? and password = ?
-//        queryWrapper.eq("password", )
+      // queryWrapper.eq("password","$10$ujas02psjl3fPoTD4zEoe.4d.gistfuGnVjS/w0Hl6BBbHofoG872" );
         User user = userService.getOne(queryWrapper);
+        //userService.
         if (user == null) {
             throw new InternalAuthenticationServiceException("UserDetailsService returned null, which is an interface contract violation");
         }
         Collection<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER"); // 这里设置的是权限
-        grantedAuthorities.add(authority);
-        user.setAuthorities(grantedAuthorities);
+       SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER"); // 这里设置的是权限
+       grantedAuthorities.add(authority);
+      user.setAuthorities(grantedAuthorities);
         return user;
     }
 }

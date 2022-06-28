@@ -1,6 +1,5 @@
 package com.iflytek.web.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.iflytek.web.mapper.GoodsMapper;
