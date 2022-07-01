@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iflytek.web.mapper.OrderMapper">
+    <resultMap id="cartList" type="com.iflytek.web.viewmodel.OrderModel">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="money" column="money"/>
+        <result property="createTime" column="create_time"/>
+        <result property="status" column="status"/>
+        <association property="mxList" javaType="com.iflytek.web.viewmodel.OrderMxModel">
+            <id property="id" column="id"/>
+            <result property="goodsName" column="goods_name"/>
+            <result property="num" column="num"/>
+            <result property="goodsId" column="goods_id"/>
+            <result property="goodsPrice" column="goods_price"/>
+            <result property="categoryId" column="category_id"/>
+            <result property="url" column="url"/>
+        </association>
+    </resultMap>
+
+    <select id="queryOrderByUserId" resultType="com.iflytek.web.viewmodel.OrderModel">
+        select o.id,o.user_id,o.order_no, o.money, o.create_time,mx.id as mx_id,
+        mx.num,g.id as goods_id,g.goods_name,g.goods_price,g.category_id,g.url
+        from order_info o
+        inner join order_mx mx on o.id = mx.order_id
+        left join goods g on mx.goods_id = g.id
+        where user_id = #{userId}
+    </select>
+
+</mapper>
