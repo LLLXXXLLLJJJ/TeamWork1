@@ -12,4 +12,11 @@
         right join hotgoods hg on g.id = hg.goodsid
         where g.id = hg.goodsid
     </select>
+    <insert id="addEvaluation" parameterType="com.iflytek.web.mapper.pojo.Evaluate">
+        INSERT INTO evaluation ( `goods_id`, `evaluation`, `create_time`, `update_time`,`user_name`)
+        VALUES ( #{goodsId},  #{eval},  #{createTime}, NULL,#{username});
+    </insert>
+    <select id="getEvaluation" resultType="com.iflytek.web.mapper.pojo.Evaluate">
+        select * from evaluation
+            </select>
 </mapper>

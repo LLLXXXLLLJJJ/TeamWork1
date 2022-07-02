@@ -1,6 +1,7 @@
 package com.iflytek.web.controller;
 
 import com.iflytek.web.pojo.Category;
+import com.iflytek.web.mapper.pojo.Evaluate;
 import com.iflytek.web.pojo.Goods;
 import com.iflytek.web.pojo.User;
 import com.iflytek.web.service.CategoryService;
@@ -10,9 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -64,6 +69,17 @@ public class HomeController {
         model.addAttribute("alsobuyGoods", alsoBuyGoodsList);
         return "detail";
     }
+    @RequestMapping("/addEvaluation")
+    @ResponseBody
+    public String addEvaluation(@RequestParam("id") String goodsId, @RequestParam("evaluation") String evaluation, HttpSession httpSession){
+        String username="匿名";
+        if(httpSession.getAttributeNames().hasMoreElements()){
+            username= httpSession.getAttributeNames().nextElement();
+        }
+        int i = goodsService.addEvaluation(goodsId,evaluation,username);
+        return "detail";
+    }
+
 
 
 

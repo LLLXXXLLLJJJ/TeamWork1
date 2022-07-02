@@ -1,6 +1,7 @@
 package com.iflytek.web.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.iflytek.web.mapper.pojo.Evaluate;
 import com.iflytek.web.pojo.Goods;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,4 +11,8 @@ import java.util.List;
 public interface GoodsMapper extends BaseMapper<Goods> {
 
     public List<Goods> queryHotGoods();
+
+    int addEvaluation(Evaluate evaluate);
+
+    List<Evaluate> getEvaluation();
 }

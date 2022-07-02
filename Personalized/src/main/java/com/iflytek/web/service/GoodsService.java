@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.iflytek.web.mapper.GoodsMapper;
 import com.iflytek.web.pojo.AlsoBuy;
+import com.iflytek.web.mapper.pojo.Evaluate;
 import com.iflytek.web.pojo.Goods;
 import com.iflytek.web.pojo.Recommendation;
 import com.iflytek.web.viewmodel.Goods4List;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -86,5 +88,13 @@ public class GoodsService extends ServiceImpl<GoodsMapper, Goods> {
         queryWrapper.inSql("id", rcdt.getList());
         List<Goods> list = this.list(queryWrapper);
         return list;
+    }
+    public int addEvaluation(String goodsId, String evaluation, String username) {
+        Evaluate evaluate =  Evaluate.builder()
+                .goodsId(Long.valueOf(goodsId))
+                .eval(evaluation)
+                .createTime(new Date())
+                .username(username).build();
+        return goodsMapper.addEvaluation(evaluate);
     }
 }

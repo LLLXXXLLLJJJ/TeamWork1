@@ -8,6 +8,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -16,8 +18,9 @@ public class UserController {
     private GoodsService goodsService;
 
     @RequestMapping("/recommendation")
-    public R recommendation(@AuthenticationPrincipal User user){
+    public R recommendation(@AuthenticationPrincipal User user, HttpSession session){
         R r = R.SUCCESS();
+        session.setAttribute(user.getUsername(),user.getId());
         r.setData(goodsService.queryRecommendation(user.getId()));
         return r;
     }

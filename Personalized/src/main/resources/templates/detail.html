@@ -160,37 +160,23 @@
         <div class="tab-content" id="tabContent2">
             <div class="container">
                 <div class="shopping-car-container">
+                    <div style="margin-top:10px">
+                        <input type="button" value="评价" onclick="promptDialog()" />
+                    </div>
                     <div class="car-headers-menu">
                         <div class="row">
                             <div class="col-md-1 car-menu">用户名</div>
-                            <div class="col-md-3 car-menu">商品评分</div>
+                            <div class="col-md-3 car-menu">商品ID</div>
                             <div class="col-md-6 car-menu">商品评价</div>
                         </div>
                     </div>
                     <div class="goods-content">
-                        <!--goods display-->
-<!--                        <% for(EvaluateList evaluate:(List<EvaluateList>)request.getAttribute("evaluates")) {%>-->
-                        <div class="col-md-1 goods-params"><%=evaluate.getUserName()%> </div>
-                        <div class="col-md-3 goods-params">
-                            <li data-default-index="0">
-                                    <span>
-<!--                                         <%  for(int i = 0; i < (int)evaluate.getGrade(); i++){%>-->
-                                        <img src="/images/x2.png">
-<!--                                        <%}%>-->
-<!--                                         <%  for(int i = (int)evaluate.getGrade(); i < 5; i++){%>-->
-                                        <img src="/images/x1.png">
-<!--                                        <%}%>-->
-                                    </span>
-                                <em class="level"></em>
-                            </li>
 
-                        </div>
-                        <div class="col-md-6 goods-params"><%=evaluate.getComment()%></div>
-<!--                        <%}%>-->
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- 标题2内容区域 -->
         <div class="tab-content" id="tabContent3">
@@ -275,6 +261,30 @@
         var _id = jq(this).attr('data-id');
         jq('.tabs-contents').find('#'+_id).addClass('active').siblings().removeClass('active');
     });
+
+    function promptDialog(){
+        //获取对话框的值
+        var value = prompt("请输入对该商品的评价：");
+        console.log(value);
+        var id = document.getElementsByClassName('divGetId')[0].id;
+        debugger;
+        var data ={id:id,evaluation:value}
+        $.ajax({
+            type:'post',
+            url:'/home/addEvaluation',
+            cache: false,
+            data:data,
+            dataType:'json',
+            success:function(data){
+            },
+            error:function(){
+                alert("评价成功")
+            }
+        })
+
+
+    }
+
 
 </script>
 </body>
